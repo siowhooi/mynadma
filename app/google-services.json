@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "13450579746",
+    "firebase_url": "https://mynadma-5902b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mynadma-5902b",
+    "storage_bucket": "mynadma-5902b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13450579746:android:5e6f5be3c1e01cbe169f7b",
+        "android_client_info": {
+          "package_name": "com.example.mynadma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCspk188AV1b6LxwKz2x257d-WZw3voKl0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
