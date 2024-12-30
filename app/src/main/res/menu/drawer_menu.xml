@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Profile item -->
+    <item
+        android:id="@+id/action_profile"
+        android:title="Profile"
+        app:showAsAction="ifRoom" />
+
+    <!-- Disaster Information item -->
+    <item
+        android:id="@+id/action_disaster_info"
+        android:title="Disaster Information"
+        app:showAsAction="ifRoom" />
+
+    <!-- Emergency Contacts item -->
+    <item
+        android:id="@+id/action_emergency_contacts"
+        android:title="Emergency Contacts"
+        app:showAsAction="ifRoom"/>
+
+    <!-- Report Incident item -->
+    <item
+        android:id="@+id/action_report_incident"
+        android:title="Report Incident"
+        app:showAsAction="ifRoom"/>
+
+    <!-- Preparedness Guidelines item -->
+    <item
+        android:id="@+id/action_preparedness_guidelines"
+        android:title="Preparedness Guidelines"
+        app:showAsAction="ifRoom" />
+
+    <!-- Map View Disaster Report item -->
+    <item
+        android:id="@+id/action_map_view_disaster_report"
+        android:title="Map View Disaster Report"
+        android:showAsAction="ifRoom"/>
+</menu>
