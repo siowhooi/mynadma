@@ -24,7 +24,7 @@ public class IntroductionScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Go to main activity:
-                Intent intent = new Intent(IntroductionScreen.this, MainActivity.class);
+                Intent intent = new Intent(IntroductionScreen.this, HomeView.class);
                 startActivity(intent);
             }
         });

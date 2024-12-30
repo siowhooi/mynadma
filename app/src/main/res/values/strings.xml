@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">mynadma</string>
+    <string name="disasterInformation">Disaster Information</string>
+    <string name="emergencyContacts">Emergency Contacts</string>
+    <string name="reportIncident">Report Incident</string>
+    <string name="preparednessGuide">Preparedness Guidelines</string>
+    <string name="mapView">Map View Disaster Report</string>
+    <string name="profile">Profile</string>
+    <string name="home">Home</string>
+    <string name="homeLatestNews">Latest News</string>
 </resources>
