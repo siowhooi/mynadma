@@ -1,12 +1,9 @@
 package com.example.mynadma;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,21 +17,27 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class HomeView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    private ActionBarDrawerToggle actionBarDrawerToggle;
+public class OfflineCaches extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private RecyclerView recyclerView;
+    private CardAdapter cardAdapter;
+    private List<OfflineLIneCacheCard> cardItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home_view);
-
+        setContentView(R.layout.activity_offline_caches);
         // setup toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Offline caches");
         setSupportActionBar(toolbar);
 
         // setup drawer layout
@@ -47,21 +50,19 @@ public class HomeView extends AppCompatActivity implements NavigationView.OnNavi
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        // setup buttons
-        Button offlineCache = (Button) findViewById(R.id.offline_caches);
-        offlineCache.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent offlineCache = new Intent(HomeView.this, OfflineCaches.class);
-                startActivity(offlineCache);
-            }
-        });
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        // Sample data
+        cardItemList = new ArrayList<>();
+        cardItemList.add(new OfflineLIneCacheCard("suck my dick", "01/01/2025"));
+        cardItemList.add(new OfflineLIneCacheCard("go fuck yourself", "01/01/2025"));
+        cardItemList.add(new OfflineLIneCacheCard("bullshit", "01/01/2025"));
+//
+        cardAdapter = new CardAdapter(cardItemList);
+        recyclerView.setAdapter(cardAdapter);
+
+
     }
 
     @Override
