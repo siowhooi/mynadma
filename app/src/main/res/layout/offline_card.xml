@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:focusable="true"
     app:cardCornerRadius="12dp"
     app:cardElevation="8dp"
     android:layout_margin="12dp"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:clickable="true">
 
     <!-- LinearLayout to hold all the elements inside the card -->
     <LinearLayout

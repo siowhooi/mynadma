@@ -58,7 +58,7 @@ public class OfflineCaches extends AppCompatActivity implements NavigationView.O
         cardItemList.add(new OfflineLIneCacheCard("suck my dick", "01/01/2025"));
         cardItemList.add(new OfflineLIneCacheCard("go fuck yourself", "01/01/2025"));
         cardItemList.add(new OfflineLIneCacheCard("bullshit", "01/01/2025"));
-//
+
         cardAdapter = new CardAdapter(cardItemList);
         recyclerView.setAdapter(cardAdapter);
 
