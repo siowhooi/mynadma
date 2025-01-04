@@ -2,6 +2,7 @@ package com.example.mynadma;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +14,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.List;
 
 // CardAdapter.java
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
 
     private List<OfflineLIneCacheCard> cardItemList;
+    private String userId;
 
     // Constructor
-    public CardAdapter(List<OfflineLIneCacheCard> cardItemList) {
+    public CardAdapter(List<OfflineLIneCacheCard> cardItemList, String userId) {
         this.cardItemList = cardItemList;
+        this.userId = userId;
     }
 
     @NonNull
@@ -58,10 +64,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
                         // Update the title (e.g., update the TextView or dataset)
                         holder.cardTitle.setText(newTitle);
 
-                        // Optionally, you can also update the data in your adapter's dataset
-                        // dataList.get(position).setTitle(newTitle);
-                        // notifyItemChanged(position);
-
                         // Show confirmation message (Toast)
                         Toast.makeText(v.getContext(), "Title updated", Toast.LENGTH_SHORT).show();
                     }
@@ -95,10 +97,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle the card click
-                Toast.makeText(v.getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
-
-                // Perform any action you want, e.g., navigate to a detail page or show more info
+                Intent viewOfflineCard = new Intent(v.getContext(), ViewOfflineCardActivity.class);
+                viewOfflineCard.putExtra("userId", userId);
+                v.getContext().startActivity(viewOfflineCard);
             }
         });
     }

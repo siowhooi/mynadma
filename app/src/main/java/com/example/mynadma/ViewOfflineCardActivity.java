@@ -5,15 +5,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -23,16 +25,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class HomeView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ViewOfflineCardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private DatabaseReference databaseReference;
     private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home_view);
+        setContentView(R.layout.activity_view_offline_card);
 
         // setup toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -48,49 +49,8 @@ public class HomeView extends AppCompatActivity implements NavigationView.OnNavi
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        // setup buttons
-        Button offlineCache = (Button) findViewById(R.id.offline_caches);
-        offlineCache.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent offlineCache = new Intent(HomeView.this, OfflineCachesActivity.class);
-                offlineCache.putExtra("userId", getIntent().getStringExtra("userId"));
-                startActivity(offlineCache);
-            }
-        });
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
-        // Retrieve user data from the database
         retrieveUserData();
 
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void retrieveUserData() {
-        databaseReference.child(getIntent().getStringExtra("userId")).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String username = dataSnapshot.child("username").getValue(String.class);
-                    String email = dataSnapshot.child("email").getValue(String.class);
-
-                    // Display username and email
-                    View headerView = navigationView.getHeaderView(0);
-                    TextView usernameTextView = headerView.findViewById(R.id.usernameTextView);
-                    TextView emailTextView = headerView.findViewById(R.id.emailTextView);
-                    usernameTextView.setText(username);
-                    emailTextView.setText(email);
-                } else {
-                    Toast.makeText(HomeView.this, "User data not found", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(HomeView.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -128,5 +88,30 @@ public class HomeView extends AppCompatActivity implements NavigationView.OnNavi
         }
 
         return false;
+    }
+
+    private void retrieveUserData() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(getIntent().getStringExtra("userId")).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String username = dataSnapshot.child("username").getValue(String.class);
+                    String email = dataSnapshot.child("email").getValue(String.class);
+
+                    // Display username and email
+                    View headerView = navigationView.getHeaderView(0);
+                    TextView usernameTextView = headerView.findViewById(R.id.usernameTextView);
+                    TextView emailTextView = headerView.findViewById(R.id.emailTextView);
+                    usernameTextView.setText(username);
+                    emailTextView.setText(email);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(ViewOfflineCardActivity.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
