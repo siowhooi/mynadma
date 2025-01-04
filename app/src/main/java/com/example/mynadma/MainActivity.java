@@ -1,13 +1,13 @@
 package com.example.mynadma;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,18 +19,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Objects;
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,55 +35,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // setup toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Setup toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // setup drawer layout
+        // Setup drawer layout
         DrawerLayout drawerLayout = findViewById(R.id.drawer);
-        NavigationView navigationView = findViewById(R.id.navigation_view);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,
-                0,0);
+        // Setup Firebase database reference
+        databaseReference = FirebaseDatabase.getInstance().getReference("message");
 
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("message");
-
+        // Setup add data functionality
         Button buttonAddData = findViewById(R.id.buttonAddData);
         EditText editTextData = findViewById(R.id.editTextData);
 
-        buttonAddData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get the text input from EditText
-                String name = editTextData.getText().toString().trim();
+        buttonAddData.setOnClickListener(v -> {
+            String name = editTextData.getText().toString().trim();
 
-                // Check if input is not empty
-                if (!name.isEmpty()) {
-                    // Push data to Firebase
-                    ref.push().setValue(name, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(DatabaseError error, DatabaseReference ref) {
-                            if (error == null) {
-                                // Data added successfully
-                                Toast.makeText(MainActivity.this, "Data added successfully!", Toast.LENGTH_SHORT).show();
-                                editTextData.setText(""); // Clear the input field
-                            } else {
-                                // Handle the error
-                                Toast.makeText(MainActivity.this, "Failed to add data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                } else {
-                    // Notify user to enter some data
-                    Toast.makeText(MainActivity.this, "Please enter some data.", Toast.LENGTH_SHORT).show();
-                }
+            if (!TextUtils.isEmpty(name)) {
+                databaseReference.push().setValue(name, (error, ref) -> {
+                    if (error == null) {
+                        Toast.makeText(MainActivity.this, "Data added successfully!", Toast.LENGTH_SHORT).show();
+                        editTextData.setText(""); // Clear the input field
+                    } else {
+                        Toast.makeText(MainActivity.this, "Failed to add data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(MainActivity.this, "Please enter some data.", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -102,22 +84,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        return false;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.action_notifications) {
             Toast.makeText(this, "Notifications selected", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.action_profile) {
-            Toast.makeText(this, "Profile selected", Toast.LENGTH_SHORT).show();
+            // Navigate to ProfileActivity
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
         }
 
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 }
