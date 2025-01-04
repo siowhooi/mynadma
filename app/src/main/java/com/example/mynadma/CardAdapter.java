@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +40,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         // Set Edit Button listener
         holder.editButton.setOnClickListener(v -> {
             // Perform your edit action
-            Toast.makeText(v.getContext(), "Edit Button Clicked", Toast.LENGTH_SHORT).show();
             final EditText editText = new EditText(v.getContext());
             editText.setText(item.getTitle());  // Pre-fill with current title
 
