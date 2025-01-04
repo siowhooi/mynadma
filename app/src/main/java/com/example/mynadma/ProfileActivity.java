@@ -181,7 +181,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void navigateToFingerprintActivity() {
+        // Retrieve userId from the intent
+        String userId = getIntent().getStringExtra("userId");
+
         Intent intent = new Intent(ProfileActivity.this, FingerprintActivity.class);
+        intent.putExtra("userId", userId);
         startActivity(intent);
     }
 }
