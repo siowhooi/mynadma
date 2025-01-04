@@ -13,10 +13,15 @@ import java.util.concurrent.Executor;
 
 public class FingerprintActivity extends AppCompatActivity {
 
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fingerprint);
+
+        // Retrieve userId from the intent
+        userId = getIntent().getStringExtra("userId");
 
         // Authenticate the user using biometric authentication
         authenticateBiometric();
@@ -28,7 +33,7 @@ public class FingerprintActivity extends AppCompatActivity {
         BiometricPrompt biometricPrompt = new BiometricPrompt(FingerprintActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
-                // Navigate to ChangePasswordActivity on successful biometric detection
+                // Navigate to ChangePasswordActivity with userId on successful biometric detection
                 navigateToChangePassword();
             }
 
@@ -57,6 +62,7 @@ public class FingerprintActivity extends AppCompatActivity {
 
     private void navigateToChangePassword() {
         Intent intent = new Intent(FingerprintActivity.this, ChangePasswordActivity.class);
+        intent.putExtra("userId", userId); // Passing userId to ChangePasswordActivity
         startActivity(intent);
     }
 }
