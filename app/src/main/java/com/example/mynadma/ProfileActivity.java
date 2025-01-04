@@ -32,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView contactTextView;
     private Button logoutButton;
     private TextView changePasswordLink;
+    private Button deleteAccountButton;
     private DatabaseReference databaseReference;
 
     @SuppressLint("MissingInflatedId")
@@ -63,6 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         contactTextView = findViewById(R.id.usercontactTextView);
         logoutButton = findViewById(R.id.buttonLogin);
         changePasswordLink = findViewById(R.id.signupLink);
+        deleteAccountButton = findViewById(R.id.buttonDelete);
 
         // Initialize Firebase database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -112,6 +114,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Set click listener for "Change Password"
         changePasswordLink.setOnClickListener(v -> navigateToFingerprintActivity());
+
+        // Set click listener for "Delete Account"
+        deleteAccountButton.setOnClickListener(v -> showDeleteAccountConfirmationDialog());
     }
 
     @Override
@@ -133,8 +138,6 @@ public class ProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     private void showLogoutConfirmationDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Confirm Logout")
@@ -142,6 +145,32 @@ public class ProfileActivity extends AppCompatActivity {
                 .setPositiveButton("Logout", (dialog, which) -> navigateToIntroductionScreen())
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();
+    }
+
+    private void showDeleteAccountConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm Account Deletion")
+                .setMessage("Are you sure you want to delete your account?")
+                .setPositiveButton("Delete", (dialog, which) -> deleteAccount())
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    private void deleteAccount() {
+        String userId = getIntent().getStringExtra("userId");
+        if (userId != null) {
+            databaseReference.child(userId).removeValue()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ProfileActivity.this, "Account deleted successfully", Toast.LENGTH_SHORT).show();
+                            navigateToIntroductionScreen();  // Redirect to the introduction screen after deletion
+                        } else {
+                            Toast.makeText(ProfileActivity.this, "Failed to delete account", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "User ID is null", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void navigateToIntroductionScreen() {
