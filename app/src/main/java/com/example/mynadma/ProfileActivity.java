@@ -181,6 +181,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void navigateToFingerprintActivity() {
+<<<<<<< HEAD
         String userId = getIntent().getStringExtra("userId"); // Retrieve userId from Intent
         if (userId != null) {
             Intent intent = new Intent(ProfileActivity.this, FingerprintActivity.class);
@@ -189,6 +190,14 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "User ID is null", Toast.LENGTH_SHORT).show();
         }
+=======
+        // Retrieve userId from the intent
+        String userId = getIntent().getStringExtra("userId");
+
+        Intent intent = new Intent(ProfileActivity.this, FingerprintActivity.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+>>>>>>> dd3d632743d2d15cf88ea0382bc00cde0fa5c40c
     }
 
 }
