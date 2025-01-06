@@ -53,7 +53,7 @@ public class HomeView extends AppCompatActivity implements NavigationView.OnNavi
         offlineCache.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent offlineCache = new Intent(HomeView.this, OfflineCachesActivity.class);
+                Intent offlineCache = new Intent(HomeView.this, OfflineDisasterGuideListActivity.class);
                 offlineCache.putExtra("userId", getIntent().getStringExtra("userId"));
                 startActivity(offlineCache);
             }

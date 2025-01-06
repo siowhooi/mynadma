@@ -13,10 +13,10 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".ViewOfflineCardActivity"
+            android:name=".ViewOfflineDisasterGuideActivity"
             android:exported="false" />
         <activity
-            android:name=".OfflineCachesActivity"
+            android:name=".OfflineDisasterGuideListActivity"
             android:exported="false" />
         <activity
             android:name=".HomeView"

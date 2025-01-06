@@ -15,18 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.List;
 
 // CardAdapter.java
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
 
-    private List<OfflineLIneCacheCard> cardItemList;
+    private List<OfflineDisasterGuideCard> cardItemList;
     private String userId;
 
     // Constructor
-    public CardAdapter(List<OfflineLIneCacheCard> cardItemList, String userId) {
+    public CardAdapter(List<OfflineDisasterGuideCard> cardItemList, String userId) {
         this.cardItemList = cardItemList;
         this.userId = userId;
     }
@@ -34,13 +32,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.offline_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.offline_guide_card, parent, false);
         return new CardViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
-        OfflineLIneCacheCard item = cardItemList.get(position);
+        OfflineDisasterGuideCard item = cardItemList.get(position);
         holder.cardTitle.setText(item.getTitle());
 
         // Set Edit Button listener
@@ -97,8 +95,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viewOfflineCard = new Intent(v.getContext(), ViewOfflineCardActivity.class);
+                Intent viewOfflineCard = new Intent(v.getContext(), ViewOfflineDisasterGuideActivity.class);
                 viewOfflineCard.putExtra("userId", userId);
+                viewOfflineCard.putExtra("disasterName", item.getDatabaseKey());
                 v.getContext().startActivity(viewOfflineCard);
             }
         });
