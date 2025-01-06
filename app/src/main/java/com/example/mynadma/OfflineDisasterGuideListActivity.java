@@ -127,7 +127,6 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
                     String userId = getIntent().getStringExtra("userId");
                     cardAdapter = new CardAdapter(cardItemList, userId);
                     recyclerView.setAdapter(cardAdapter);
-                    Toast.makeText(OfflineDisasterGuideListActivity.this, "Information updated", Toast.LENGTH_SHORT).show();
                 }
             }
 
