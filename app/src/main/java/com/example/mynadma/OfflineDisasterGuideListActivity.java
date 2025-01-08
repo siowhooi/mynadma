@@ -210,9 +210,15 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
                             double longitude = location.getLongitude();
                             getCityAndState(latitude, longitude);
                         } else {
-                            Toast.makeText(OfflineDisasterGuideListActivity.this,
-                                    "Unable to get location. Make sure location is enabled on the device.",
-                                    Toast.LENGTH_SHORT).show();
+                            LinearLayout userLocationStatusBar = (LinearLayout) findViewById(R.id.statusBar);
+                            TextView locationText = (TextView) findViewById(R.id.locationText);
+                            TextView downloadAdvice = (TextView) findViewById(R.id.downloadAdvice);
+                            int color = ContextCompat.getColor(getApplicationContext(), R.color.badConnection);
+                            String advice = ContextCompat.getString(getApplicationContext(), R.string.unknownConnection);;
+
+                            userLocationStatusBar.setBackgroundColor(color);
+                            locationText.setText("Unable to get location.");
+                            downloadAdvice.setText(advice);
                         }
                     }
                 });
