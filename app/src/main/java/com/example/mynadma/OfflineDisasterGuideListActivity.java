@@ -3,6 +3,7 @@
 package com.example.mynadma;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -67,6 +68,15 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // open the nadma portal for more guidelines
+        TextView hyperlinkText = findViewById(R.id.hyperlinkText);
+        hyperlinkText.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://www.nadma.gov.my/bm/media-2/infografik-dan-poster"));
+            startActivity(intent);
+        });
+
 
         getDisasterInformation();
         retrieveUserData();
