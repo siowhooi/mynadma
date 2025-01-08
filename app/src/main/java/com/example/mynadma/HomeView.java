@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -13,12 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -52,10 +48,15 @@ public class HomeView extends AppCompatActivity implements NavigationView.OnNavi
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        // setup buttons
+        Button offlineCache = (Button) findViewById(R.id.offline_caches);
+        offlineCache.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent offlineCache = new Intent(HomeView.this, OfflineDisasterGuideListActivity.class);
+                offlineCache.putExtra("userId", getIntent().getStringExtra("userId"));
+                startActivity(offlineCache);
+            }
         });
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
