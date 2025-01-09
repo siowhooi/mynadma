@@ -57,6 +57,7 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
     private DatabaseReference ref;
     private NavigationView navigationView;
 
+    private String city, state;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private FusedLocationProviderClient fusedLocationClient;
     @Override
@@ -108,6 +109,23 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
 
         getDisasterInformation();
         retrieveUserData();
+
+        // setup on click listener for that status bar
+        LinearLayout statusBar = (LinearLayout) findViewById(R.id.statusBar);
+        statusBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(city != null && state != null) {
+                    Intent ratingIntent = new Intent(OfflineDisasterGuideListActivity.this, SubmitRatingActivity.class);
+                    ratingIntent.putExtra("city", city);
+                    ratingIntent.putExtra("state", state);
+                    ratingIntent.putExtra("userId", getIntent().getStringExtra("userId"));
+                    startActivity(ratingIntent);
+                } else {
+                    Toast.makeText(OfflineDisasterGuideListActivity.this, "Unable to get location.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -156,7 +174,7 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
                     cardItemList = new ArrayList<>();
                     for(OfflineGuide offlineGuide: guideList) {
                         String title = offlineGuide.getTitle();
-                        OfflineDisasterGuideCard newCard = new OfflineDisasterGuideCard(title, "01/01/2025");
+                        OfflineDisasterGuideCard newCard = new OfflineDisasterGuideCard(title);
                         newCard.setdatabaseKey(offlineGuide.getKey());
                         cardItemList.add(newCard);
 
@@ -229,8 +247,8 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
         try {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (addresses != null && !addresses.isEmpty()) {
-                String state = addresses.get(0).getAdminArea();   // State name
-                String city = addresses.get(0).getLocality();      // City name
+                state = addresses.get(0).getAdminArea();   // State name
+                city = addresses.get(0).getLocality();      // City name
                 setStatusBar(city, state);
             } else {
                 Toast.makeText(this,
@@ -277,7 +295,7 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
     }
     
     private void getConnectionRating(String city, String state) {
-        String collectionReference = "networkRating/" + state.toLowerCase() + "/" + city.toLowerCase();
+        String collectionReference = "networkRating/" + state.toLowerCase() + "/" + city.toLowerCase() + "/rating";
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(collectionReference);
         LinearLayout userLocationStatusBar = (LinearLayout) findViewById(R.id.statusBar);
         TextView locationText = (TextView) findViewById(R.id.locationText);
@@ -290,12 +308,12 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
                 Integer connectionRating = dataSnapshot.getValue(Integer.class);
                 int color = 0;
                 String advice = "";
-                String userLocation = city + ", " + state;
+                String userLocation = "You are now in " + city + ", " + state;
                 locationText.setText(userLocation);
 
                 // Set the background color based on the connection rating
                 if (connectionRating != null) {
-                    if (connectionRating == 1 || connectionRating == 2) {
+                    if (connectionRating < 3) {
                         // Low connection (Red)
                         color = ContextCompat.getColor(getApplicationContext(), R.color.badConnection);
                         advice = ContextCompat.getString(getApplicationContext(), R.string.badConnection);
@@ -303,7 +321,7 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
                         // Neutral connection (Yellow)
                         color = ContextCompat.getColor(getApplicationContext(), R.color.neutralConnection);
                         advice = ContextCompat.getString(getApplicationContext(), R.string.neutralConnection);
-                    } else if (connectionRating == 4 || connectionRating == 5) {
+                    } else {
                         // High connection (Green)
                         color = ContextCompat.getColor(getApplicationContext(), R.color.goodConnection);
                         advice = ContextCompat.getString(getApplicationContext(), R.string.goodConnection);

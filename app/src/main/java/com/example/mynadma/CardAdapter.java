@@ -71,28 +71,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
                     .show();
         });
 
-        // Set Delete Button listener
-        holder.deleteButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(v.getContext())
-                    .setTitle("Confirm Deletion")
-                    .setMessage(item.getTitle())
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Perform the delete action
-                            // In this case, just show a Toast for now
-                            Toast.makeText(v.getContext(), "Item Deleted", Toast.LENGTH_SHORT).show();
-
-                            // You would remove the item from your dataset here
-                            // e.g., dataList.remove(position);
-                            // adapter.notifyItemRemoved(position);
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
-        });
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,9 +94,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         public CardViewHolder(View itemView) {
             super(itemView);
             cardTitle = itemView.findViewById(R.id.cardTitle);
-            dateDownloaded = itemView.findViewById(R.id.dateDownloaded);
             downloadButton = itemView.findViewById(R.id.downloadButton);
-            deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
 

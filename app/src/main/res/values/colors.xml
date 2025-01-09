@@ -3,8 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- UI color -->
+    <color name="red">#D32F2F</color>
+    <color name="purple">#673AB7</color>
+
     <!-- Connection Rating Colors -->
     <color name="goodConnection">#4CAF50</color> <!-- Green -->
     <color name="neutralConnection">#FFC107</color> <!-- Yellow -->
     <color name="badConnection">#F44336</color> <!-- Red -->
+
 </resources>
