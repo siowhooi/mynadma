@@ -11,6 +11,12 @@
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="offlineCachesButton">Offline Caches</string>
-    <string name="offlineCachesDesc">Manage offline caches to access the most up-to-date data, even without an internet connection.  Click any card to view the information.</string>
+    <string name="offlineCachesDesc">Click any card to view the offline guidelines.</string>
     <string name="clickForMoreInfo"><u>For more information, click here.</u></string>
+    <string name="goodConnection">Connection is strong—you\'re good to go!</string>
+    <string name="neutralConnection">Connection is okay—consider downloading just in case.</string>
+    <string name="badConnection">Connection is weak—download now while you can!</string>
+    <string name="unknownConnection">The rating for your location cannot be determined—consider downloading just in case.</string>
+    <string name="statusBarTooltip">Incorrect?  Submit your rating.</string>
+    <string name="ratingFormHeading">Rate the network connection of</string>
 </resources>
