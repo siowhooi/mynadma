@@ -7,33 +7,16 @@
         android:title="@string/profile"
         app:showAsAction="ifRoom" />
 
-    <!-- Disaster Information item -->
-    <item
-        android:id="@+id/action_disaster_info"
-        android:title="@string/disasterInformation"
-        app:showAsAction="ifRoom" />
-
-    <!-- Emergency Contacts item -->
-    <item
-        android:id="@+id/action_emergency_contacts"
-        android:title="@string/emergencyContacts"
-        app:showAsAction="ifRoom"/>
-
-    <!-- Report Incident item -->
-    <item
-        android:id="@+id/action_report_incident"
-        android:title="@string/reportIncident"
-        app:showAsAction="ifRoom"/>
-
     <!-- Preparedness Guidelines item -->
     <item
         android:id="@+id/action_preparedness_guidelines"
         android:title="@string/preparednessGuide"
         app:showAsAction="ifRoom" />
 
-    <!-- Map View Disaster Report item -->
+    <!-- Disaster Information item -->
     <item
-        android:id="@+id/action_map_view_disaster_report"
-        android:title="@string/mapView"
+        android:id="@+id/action_disaster_info"
+        android:title="@string/disasterInformation"
         app:showAsAction="ifRoom" />
+
 </menu>

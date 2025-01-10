@@ -32,9 +32,17 @@ public class SubmitRatingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_rating);
 
-        // setup toolbar
+        // Set up the toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Enable the navigate up button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        // Set navigation click listener
+        toolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         // setting the form heading
         TextView formTownState = (TextView) findViewById(R.id.formTownState);
