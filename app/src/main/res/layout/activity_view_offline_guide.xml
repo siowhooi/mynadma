@@ -22,7 +22,6 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:navigationIcon="@drawable/ic_back"
             app:titleTextColor="@color/white"
-            app:menu="@menu/top_app_bar_menu"
             app:title="@string/app_name"/>
     </com.google.android.material.appbar.AppBarLayout>
 

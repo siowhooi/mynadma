@@ -74,10 +74,10 @@
                 android:text="@string/mapView"/>
 
             <Button
-                android:id="@+id/offline_caches"
+                android:id="@+id/offline_guide"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/offlineCachesButton"/>
+                android:text="@string/preparednessGuideline"/>
 
         </LinearLayout>
 

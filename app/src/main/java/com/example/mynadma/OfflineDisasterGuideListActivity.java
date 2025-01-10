@@ -49,13 +49,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class OfflineDisasterGuideListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class OfflineDisasterGuideListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CardAdapter cardAdapter;
     private List<OfflineDisasterGuideCard> cardItemList;
 
     private DatabaseReference ref;
-    private NavigationView navigationView;
 
     private String city, state;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -69,19 +68,17 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_offline_guide_list);
 
-        // setup toolbar
+        // Set up the toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // setup drawer layout
-        DrawerLayout drawerLayout = findViewById(R.id.drawer);
-        navigationView = findViewById(R.id.navigation_view);
+        // Enable the navigate up button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                0, 0);
-
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
+        // Set navigation click listener
+        toolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -108,7 +105,6 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
         }
 
         getDisasterInformation();
-        retrieveUserData();
 
         // setup on click listener for that status bar
         LinearLayout statusBar = (LinearLayout) findViewById(R.id.statusBar);
@@ -116,45 +112,16 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
             @Override
             public void onClick(View v) {
                 if(city != null && state != null) {
-                    Intent ratingIntent = new Intent(OfflineDisasterGuideListActivity.this, SubmitRatingActivity.class);
+                    Intent ratingIntent = new Intent(getApplicationContext(), SubmitRatingActivity.class);
                     ratingIntent.putExtra("city", city);
                     ratingIntent.putExtra("state", state);
                     ratingIntent.putExtra("userId", getIntent().getStringExtra("userId"));
                     startActivity(ratingIntent);
                 } else {
-                    Toast.makeText(OfflineDisasterGuideListActivity.this, "Unable to get location.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Unable to get location.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.top_app_bar_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        return false;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.action_notifications) {
-            Toast.makeText(this, "Notifications selected", Toast.LENGTH_SHORT).show();
-        } else if (itemId == R.id.action_profile) {
-            // Navigate to ProfileActivity
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra("userId", getIntent().getStringExtra("userId"));
-            startActivity(intent);
-        }
-
-        return false;
     }
 
     private void getDisasterInformation() {
@@ -169,7 +136,7 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
                 }
 
                 if(guideList.isEmpty()) {
-                    Toast.makeText(OfflineDisasterGuideListActivity.this, "No new disaster information found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "No new disaster information found", Toast.LENGTH_SHORT).show();
                 } else {
                     cardItemList = new ArrayList<>();
                     for(OfflineGuide offlineGuide: guideList) {
@@ -189,31 +156,6 @@ public class OfflineDisasterGuideListActivity extends AppCompatActivity implemen
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("FirebaseError", "Error: " + error.getMessage());
-            }
-        });
-    }
-
-    private void retrieveUserData() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        ref.child(getIntent().getStringExtra("userId")).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String username = dataSnapshot.child("username").getValue(String.class);
-                    String email = dataSnapshot.child("email").getValue(String.class);
-
-                    // Display username and email
-                    View headerView = navigationView.getHeaderView(0);
-                    TextView usernameTextView = headerView.findViewById(R.id.usernameTextView);
-                    TextView emailTextView = headerView.findViewById(R.id.emailTextView);
-                    usernameTextView.setText(username);
-                    emailTextView.setText(email);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(OfflineDisasterGuideListActivity.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

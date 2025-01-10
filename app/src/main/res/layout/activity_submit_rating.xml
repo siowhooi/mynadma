@@ -16,12 +16,23 @@
         android:orientation="vertical"
         android:gravity="top">
 
-        <!-- Include App Bar -->
-        <include
-            layout="@layout/app_bar"
+        <!-- App Bar -->
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#673AB7"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:navigationIcon="@drawable/ic_back"
+                app:titleTextColor="@color/white"
+                app:title="@string/submitRating"/>
+        </com.google.android.material.appbar.AppBarLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

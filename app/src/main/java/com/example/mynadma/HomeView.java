@@ -41,16 +41,14 @@ public class HomeView extends AppCompatActivity implements NavigationView.OnNavi
         // setup drawer layout
         DrawerLayout drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
-
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 0, 0);
-
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
         // setup buttons
-        Button offlineCache = (Button) findViewById(R.id.offline_caches);
-        offlineCache.setOnClickListener(new View.OnClickListener() {
+        Button offlineGuide = (Button) findViewById(R.id.offline_guide);
+        offlineGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent offlineCache = new Intent(HomeView.this, OfflineDisasterGuideListActivity.class);
@@ -99,34 +97,43 @@ public class HomeView extends AppCompatActivity implements NavigationView.OnNavi
         return true;
     }
 
+    // navigation drawer setup
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.action_profile:
+                // Navigate to ProfileActivity
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                intent.putExtra("userId", getIntent().getStringExtra("userId"));
+                startActivity(intent);
+                break;
 
-        if (itemId == R.id.action_profile) {
-            // Navigate to ProfileActivity
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra("userId", getIntent().getStringExtra("userId"));
-            startActivity(intent);
-        } else if (itemId == R.id.action_notifications) {
-            Toast.makeText(this, "Notifications selected", Toast.LENGTH_SHORT).show();
+            case R.id.action_notifications:
+                Toast.makeText(getApplicationContext(), "Notifications selected", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.action_preparedness_guidelines:
+                Intent offlineCache = new Intent(getApplicationContext(), OfflineDisasterGuideListActivity.class);
+                offlineCache.putExtra("userId", getIntent().getStringExtra("userId"));
+                startActivity(offlineCache);
+                break;
         }
 
         return false;
     }
 
+    // toolbar setup
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.action_notifications) {
-            Toast.makeText(this, "Notifications selected", Toast.LENGTH_SHORT).show();
-        } else if (itemId == R.id.action_profile) {
-            // Navigate to ProfileActivity
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra("userId", getIntent().getStringExtra("userId"));
-            startActivity(intent);
+        switch (itemId) {
+            case R.id.action_profile:
+                Intent intent = new Intent(this, ProfileActivity.class);
+                intent.putExtra("userId", getIntent().getStringExtra("userId"));
+                startActivity(intent);
+                break;
         }
-
         return false;
     }
 }
