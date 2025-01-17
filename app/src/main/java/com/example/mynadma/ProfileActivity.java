@@ -2,6 +2,7 @@ package com.example.mynadma;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -24,16 +27,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProfileActivity extends AppCompatActivity {
 
     private TextView welcomeTextView;
-    private TextView usernameTextView;
-    private TextView emailTextView;
-    private TextView contactTextView;
     private Button logoutButton;
     private TextView changePasswordLink;
     private Button deleteAccountButton;
+    private TextView contactSupportLink; // New TextView for "Contact Support"
     private DatabaseReference databaseReference;
+    private RecyclerView profileRecyclerView;
+    private ProfileAdapter profileAdapter;
+    private List<Profile> profileList;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -59,15 +66,20 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Initialize TextView and Button references
         welcomeTextView = findViewById(R.id.userwelcomeTextView);
-        usernameTextView = findViewById(R.id.usernameTextView);
-        emailTextView = findViewById(R.id.emailTextView);
-        contactTextView = findViewById(R.id.usercontactTextView);
         logoutButton = findViewById(R.id.buttonLogin);
         changePasswordLink = findViewById(R.id.signupLink);
         deleteAccountButton = findViewById(R.id.buttonDelete);
+        contactSupportLink = findViewById(R.id.contactSupportLink); // Initialize "Contact Support" link
 
         // Initialize Firebase database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
+        // Initialize RecyclerView and Adapter
+        profileRecyclerView = findViewById(R.id.profileRecyclerView);
+        profileRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        profileList = new ArrayList<>();
+        profileAdapter = new ProfileAdapter(profileList);
+        profileRecyclerView.setAdapter(profileAdapter);
 
         // Get the userId passed from the login activity
         String userId = getIntent().getStringExtra("userId");
@@ -85,15 +97,19 @@ public class ProfileActivity extends AppCompatActivity {
                         // Set data to TextViews
                         if (username != null) {
                             welcomeTextView.setText("Welcome, " + username);
-                            usernameTextView.setText("USERNAME: " + username);
                             drawerUsername.setText(username); // Set username in drawer
                         }
                         if (email != null) {
-                            emailTextView.setText("EMAIL: " + email);
                             drawerEmail.setText(email); // Set email in drawer
                         }
-                        if (contact != null) {
-                            contactTextView.setText("CONTACT: " + contact);
+
+                        // Add profile data to RecyclerView
+                        if (username != null && email != null && contact != null) {
+                            profileList.clear(); // Clear the list before adding new data
+                            profileList.add(new Profile("Username", username));
+                            profileList.add(new Profile("Email", email));
+                            profileList.add(new Profile("Contact", contact));
+                            profileAdapter.notifyDataSetChanged();
                         }
                     } else {
                         Toast.makeText(ProfileActivity.this, "User data not found", Toast.LENGTH_SHORT).show();
@@ -117,6 +133,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Set click listener for "Delete Account"
         deleteAccountButton.setOnClickListener(v -> showDeleteAccountConfirmationDialog());
+
+        // Set click listener for "Contact Support"
+        contactSupportLink.setOnClickListener(v -> contactSupport());
     }
 
     @Override
@@ -182,10 +201,19 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void navigateToFingerprintActivity() {
         // Retrieve userId from the intent
-        String userId = getIntent().getStringExtra("userId");
+        String userId = getIntent().getStringExtra("userId"); // Retrieve userId from Intent
+        if (userId != null) {
+            Intent intent = new Intent(ProfileActivity.this, FingerprintActivity.class);
+            intent.putExtra("userId", userId); // Pass userId to FingerprintActivity
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "User ID is null", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        Intent intent = new Intent(ProfileActivity.this, FingerprintActivity.class);
-        intent.putExtra("userId", userId);
+    private void contactSupport() {
+        // Implicit intent to dial phone number
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:0380642400"));
         startActivity(intent);
     }
 }

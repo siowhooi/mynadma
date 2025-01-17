@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +40,19 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser();
             }
         });
+
+        // Handle "Already Registered? Log in here" link click
+        TextView signupLink = findViewById(R.id.signupLink);
+        signupLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
+
 
     private void registerUser() {
         String username = editTextUsername.getText().toString().trim();

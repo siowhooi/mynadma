@@ -2,6 +2,10 @@ package com.example.mynadma;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +18,7 @@ import java.util.concurrent.Executor;
 public class FingerprintActivity extends AppCompatActivity {
 
     private String userId;
+    private boolean isDoubleClick = false; // Flag to track double-click
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,8 @@ public class FingerprintActivity extends AppCompatActivity {
 
         // Authenticate the user using biometric authentication
         authenticateBiometric();
+
+
     }
 
     private void authenticateBiometric() {
@@ -60,9 +67,17 @@ public class FingerprintActivity extends AppCompatActivity {
         biometricPrompt.authenticate(promptInfo);
     }
 
+
+
     private void navigateToChangePassword() {
-        Intent intent = new Intent(FingerprintActivity.this, ChangePasswordActivity.class);
-        intent.putExtra("userId", userId); // Passing userId to ChangePasswordActivity
-        startActivity(intent);
+        if (userId != null) {
+            Intent intent = new Intent(FingerprintActivity.this, ChangePasswordActivity.class);
+            intent.putExtra("userId", userId); // Pass userId to ChangePasswordActivity
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "User ID is null", Toast.LENGTH_SHORT).show();
+        }
     }
+
+
 }

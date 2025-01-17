@@ -2,6 +2,7 @@ package com.example.mynadma;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,14 +33,21 @@ public class ChangePasswordActivity extends AppCompatActivity {
         newPasswordEditText = findViewById(R.id.newPasswordEditText);
         changePasswordButton = findViewById(R.id.changePasswordButton);
 
-        // Initialize Firebase database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
         // Retrieve userId from intent
         userId = getIntent().getStringExtra("userId");
 
+        Log.d("ChangePasswordActivity", "Received UserID: " + userId);
+
+        if (userId == null) {
+            Toast.makeText(this, "User ID is null", Toast.LENGTH_SHORT).show();
+        }
+
+        // Initialize Firebase database reference
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
         changePasswordButton.setOnClickListener(v -> changePassword());
     }
+
 
     private void changePassword() {
         String oldPassword = oldPasswordEditText.getText().toString().trim();
