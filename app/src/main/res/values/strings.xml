@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">mynadma</string>
+    <string name="app_name">MyNadma</string>
     <string name="disasterInformation">Disaster Information</string>
     <string name="emergencyContacts">Emergency Contacts</string>
     <string name="reportIncident">Report Incident</string>
@@ -10,4 +10,15 @@
     <string name="homeLatestNews">Latest News</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="preparednessGuideline">Preparedness Guidelines</string>
+    <string name="offlineCachesDesc">Click any card to view the offline guidelines.</string>
+    <string name="clickForMoreInfo"><u>For more information, click here.</u></string>
+    <string name="goodConnection">Connection is strong—you\'re good to go!</string>
+    <string name="neutralConnection">Connection is okay—consider downloading just in case.</string>
+    <string name="badConnection">Connection is weak—download now while you can!</string>
+    <string name="unknownConnection">The rating for your location cannot be determined—consider downloading just in case.</string>
+    <string name="statusBarTooltip">Incorrect?  Submit your rating.</string>
+    <string name="ratingFormHeading">Rate the network connection of</string>
+    <string name="submitRating">Submit</string>
+    <string name="download">Download</string>
 </resources>

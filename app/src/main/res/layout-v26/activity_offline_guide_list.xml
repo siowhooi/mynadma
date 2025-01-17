@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
+    android:fitsSystemWindows="true">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:gravity="top">
+
+        <!-- App Bar -->
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#673AB7"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:navigationIcon="@drawable/ic_back"
+                app:titleTextColor="@color/white"
+                app:title="@string/preparednessGuide"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- Status Bar -->
+        <LinearLayout
+            android:id="@+id/statusBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/goodConnection"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:tooltipText="@string/statusBarTooltip">
+
+            <!-- Location Text -->
+            <TextView
+                android:id="@+id/locationText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loading location..."
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:gravity="center"/>
+
+            <!-- Download Advice -->
+            <TextView
+                android:id="@+id/downloadAdvice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/goodConnection"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:paddingTop="4dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/descriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/offlineCachesDesc"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_margin="4dp"
+            android:gravity="start"/>
+
+        <TextView
+            android:id="@+id/hyperlinkText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/clickForMoreInfo"
+            android:textSize="16sp"
+            android:textColor="#0000EE"
+            android:layout_margin="4dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

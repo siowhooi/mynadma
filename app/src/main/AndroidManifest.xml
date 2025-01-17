@@ -1,5 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -11,49 +17,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
-
+        <activity
+            android:name=".SubmitRatingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewOfflineDisasterGuideActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OfflineDisasterGuideListActivity"
+            android:exported="false" />
         <activity
             android:name=".HomeView"
             android:exported="false" />
-
         <activity
             android:name=".IntroductionScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
-
-        <!-- Declare RegisterActivity -->
+            android:exported="false" /> <!-- Declare RegisterActivity -->
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" />
-
-        <!-- Declare LoginActivity -->
+            android:exported="false" /> <!-- Declare LoginActivity -->
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
-
-        <!-- Declare ProfileActivity -->
+            android:exported="false" /> <!-- Declare ProfileActivity -->
         <activity
             android:name=".ProfileActivity"
-            android:exported="false" />
-
-        <!-- Declare FingerprintActivity -->
+            android:exported="false" /> <!-- Declare FingerprintActivity -->
         <activity
             android:name=".FingerprintActivity"
-            android:exported="false" />
-
-        <!-- Declare ChangePasswordActivity -->
+            android:exported="false" /> <!-- Declare ChangePasswordActivity -->
         <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
+    android:fitsSystemWindows="true">
+
+    <!-- App Bar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#673AB7"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:navigationIcon="@drawable/ic_back"
+            app:titleTextColor="@color/white"
+            app:title="@string/app_name"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Content ScrollView -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Earthquake Preparedness Guide"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:gravity="center"
+                android:padding="8dp" />
+
+            <!-- Subtitle -->
+            <TextView
+                android:id="@+id/subtitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stay safe during an earthquake"
+                android:textSize="18sp"
+                android:textStyle="italic"
+                android:textColor="#666666"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp" />
+
+            <!-- Section: Before an Earthquake -->
+            <TextView
+                android:id="@+id/beforeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Before an Earthquake"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:id="@+id/beforeContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Secure heavy furniture to walls.\n2. Prepare an emergency kit with food, water, and supplies.\n3. Identify safe spots in your home, like under sturdy furniture.\n4. Practice your family’s emergency plan."
+                android:textSize="16sp"
+                android:textColor="#555555"
+                android:lineSpacingExtra="6dp"
+                android:paddingBottom="16dp" />
+
+            <!-- Section: During an Earthquake -->
+            <TextView
+                android:id="@+id/duringTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="During an Earthquake"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:id="@+id/duringContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Drop, Cover, and Hold On.\n2. Stay away from windows and heavy objects.\n3. If you’re outside, move to an open area away from buildings and power lines.\n4. If you’re driving, stop the car and stay inside."
+                android:textSize="16sp"
+                android:textColor="#555555"
+                android:lineSpacingExtra="6dp"
+                android:paddingBottom="16dp" />
+
+            <!-- Section: After an Earthquake -->
+            <TextView
+                android:id="@+id/afterTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="After an Earthquake"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:id="@+id/afterContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Check yourself and others for injuries.\n2. Be prepared for aftershocks.\n3. Inspect your home for damage and avoid hazardous areas.\n4. Stay informed by listening to emergency broadcasts."
+                android:textSize="16sp"
+                android:textColor="#555555"
+                android:lineSpacingExtra="6dp"
+                android:paddingBottom="16dp" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
